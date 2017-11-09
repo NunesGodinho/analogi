@@ -10,8 +10,8 @@ $query="SELECT 	count(alert.rule_id) as count,
 		alert.rule_id as rule_id,
 		signature.level,
 		signature.description,
-		data.full_log as data
-	FROM alert, location, signature, data
+		alert.full_log as data
+	FROM alert, location, signature
 	WHERE alert.timestamp>".(time()-($glb_threatdays*3600*24))."
 	AND signature.level>".$glb_threatlevel."
 	AND alert.rule_id = signature.rule_id
