@@ -35,7 +35,7 @@ if(isset($_GET['action']) && $_GET['action']=='delete' && preg_match("/\/managem
 	}
 	# delete data
 	if(isset($_GET['datamatch']) && strlen($_GET['datamatch'])>0){
-		$where.="data.full_log like \"%".$_GET['datamatch']."%\" AND ";
+		$where.="alert.full_log like \"%".$_GET['datamatch']."%\" AND ";
 	}
 	
 	$query="";
@@ -45,8 +45,7 @@ if(isset($_GET['action']) && $_GET['action']=='delete' && preg_match("/\/managem
 		# remove the last 'AND '
 		$where=substr($where,0,-4);
 
-		$querydelete="DELETE alert, data FROM alert
-			LEFT JOIN data ON alert.id=data.id
+		$querydelete="DELETE FROM alert
 			LEFT JOIN signature ON alert.rule_id=signature.rule_id
 			LEFT JOIN location ON alert.location_id=location.id
 			WHERE ".$where;
@@ -73,8 +72,7 @@ if(isset($_GET['action']) && $_GET['action']=='removelocation' && isset($_GET['s
 	# Yes I know the referer is fakable, but this is to help reduce CSRF attacks from remote links, and not to prevent malicious browsers
 
 	# Delete data
-	$querydelete="DELETE alert, data FROM alert
-		LEFT JOIN data ON alert.id=data.id
+	$querydelete="DELETE FROM alert
 		LEFT JOIN signature ON alert.rule_id=signature.rule_id
 		LEFT JOIN location ON alert.location_id=location.id
 		WHERE location.name like \"".$_GET['source']."%\"";
